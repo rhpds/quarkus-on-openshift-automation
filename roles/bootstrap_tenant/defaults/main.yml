@@ -1,0 +1,6 @@
+quarkus_on_openshift_bootstrap_tenant_ocp_ingress_domain: ""
+quarkus_on_openshift_bootstrap_tenant_ocp_api_url: ""
+quarkus_on_openshift_bootstrap_tenant_ocp_api_token: ""
+quarkus_on_openshift_bootstrap_tenant_username: ""
+quarkus_on_openshift_bootstrap_tenant_user_password: ""
+quarkus_on_openshift_bootstrap_tenant_namespaces: []
