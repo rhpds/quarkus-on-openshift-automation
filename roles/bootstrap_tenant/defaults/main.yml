@@ -1,3 +1,5 @@
+---
+
 quarkus_on_openshift_bootstrap_tenant_ocp_ingress_domain: ""
 quarkus_on_openshift_bootstrap_tenant_ocp_api_url: ""
 quarkus_on_openshift_bootstrap_tenant_ocp_api_token: ""

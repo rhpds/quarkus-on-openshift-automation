@@ -1,0 +1,10 @@
+---
+
+- name: Remove tenant configmap
+  kubernetes.core.k8s:
+    state: absent
+    api_version: v1
+    kind: ConfigMap
+    name: "example-tenant-config"
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
