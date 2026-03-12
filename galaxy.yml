@@ -1,0 +1,10 @@
+namespace: rhpds
+name: quarkus_on_openshift
+version: 1.0.0
+readme: README.md
+authors:
+  - RHPDS
+description: Quarkus on OpenShift automation collection
+license:
+  - Apache-2.0
+repository: https://github.com/rhpds/quarkus-on-openshift-automation
