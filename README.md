@@ -29,11 +29,15 @@ Bootstraps an OpenShift cluster for Quarkus workloads.
 - hosts: localhost
   roles:
     - role: rhpds.quarkus_on_openshift.bootstrap_cluster
-      quarkus_on_openshift_bootstrap_cluster: myvarvalue1
+      quarkus_on_openshift_bootstrap_cluster_ocp_ingress_domain: apps.example.com
+      quarkus_on_openshift_bootstrap_cluster_ocp_api_url: https://api.example.com:6443
+      quarkus_on_openshift_bootstrap_cluster_ocp_api_token: sha256~xxxxx
 ```
 
 #### Variables
 
 | Variable | Default | Description |
 |---|---|---|
-| `quarkus_on_openshift_bootstrap_cluster` | `""` | Value to pass to the bootstrap cluster role |
+| `quarkus_on_openshift_bootstrap_cluster_ocp_ingress_domain` | `""` | OpenShift ingress domain |
+| `quarkus_on_openshift_bootstrap_cluster_ocp_api_url` | `""` | OpenShift API URL |
+| `quarkus_on_openshift_bootstrap_cluster_ocp_api_token` | `""` | OpenShift API token |

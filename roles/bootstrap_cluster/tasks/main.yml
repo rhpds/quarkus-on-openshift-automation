@@ -1,3 +1,6 @@
-- name: Print bootstrap_cluster variable
+- name: Print bootstrap_cluster variables
   ansible.builtin.debug:
-    var: quarkus_on_openshift_bootstrap_cluster
+    msg:
+      ocp_ingress_domain: "{{ quarkus_on_openshift_bootstrap_cluster_ocp_ingress_domain }}"
+      ocp_api_url: "{{ quarkus_on_openshift_bootstrap_cluster_ocp_api_url }}"
+      ocp_api_token: "{{ quarkus_on_openshift_bootstrap_cluster_ocp_api_token }}"
