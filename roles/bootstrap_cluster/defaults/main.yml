@@ -1,4 +1,3 @@
 ---
 
-quarkus_on_openshift_bootstrap_cluster_ocp_api_url: ""
-quarkus_on_openshift_bootstrap_cluster_ocp_api_token: ""
+quarkus_on_openshift_bootstrap_cluster_myvar: ""

@@ -6,6 +6,7 @@
       username: "{{ quarkus_on_openshift_bootstrap_tenant_username }}"
       user_password: "{{ quarkus_on_openshift_bootstrap_tenant_user_password }}"
       namespaces: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+      _agnosticd_user_data: "{{ lookup('agnosticd.core.agnosticd_user_data', '*') }}"
 
 - name: Create tenant configmap
   kubernetes.core.k8s:
