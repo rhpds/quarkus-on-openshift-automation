@@ -16,3 +16,59 @@
   ansible.builtin.debug:
     msg:
       ocp_ingress_domain: "{{ r_ingress.resources[0].status.domain }}"
+
+- name: Create CatalogSource Index 4.20
+  k8s:
+    state: present
+    merge_type:
+    - strategic-merge
+    - merge
+    definition: "{{ lookup('file', item ) | from_yaml }}"
+  loop:
+  - redhat-operators-index.yaml
+  - community-operators-index.yaml
+
+- name: Create operator subscription for kubernetes-imagepuller-operator
+  kubernetes.core.k8s:
+    merge_type:
+    - merge
+    definition: "{{ lookup('file', 'kubernetes-imagepuller-operator_subscription.yaml' ) }}"
+
+  # Install  AMQ Streams for all workspaces
+- name: Look for amq subscription
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: amq-streams
+    namespace: openshift-operators
+  register: r_amq_sub
+
+- name: Create OpenShift Objects for Kafka (amq streams)
+  when: r_amq_sub.resources | list | length == 0
+  include_tasks: install-amqstreams.yaml
+
+  # Install  Opentelemetry for all workspaces
+- name: Look for opentelemetry subscription
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: opentelemetry-product
+    namespace: openshift-operators
+  register: r_opentelemetry_sub
+
+- name: Create OpenShift Objects for opentelemetry
+  when: r_opentelemetry_sub.resources | list | length == 0
+  include_tasks: install-opentelemetry.yaml
+
+# TODO: Replace this Jaeger operator with the newer Tempo operator:
+- name: Look for jaeger subscription
+  k8s_info:
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: jaeger-product
+    namespace: openshift-operators
+  register: r_jaeger_sub
+
+- name: Create OpenShift Objects for Jaeger
+  when: r_jaeger_sub.resources | list | length == 0
+  include_tasks: install-jaeger.yaml
