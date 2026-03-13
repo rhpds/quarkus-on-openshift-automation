@@ -29,14 +29,14 @@ Bootstraps an OpenShift cluster for Quarkus workloads.
 - hosts: localhost
   roles:
     - role: rhpds.quarkus_on_openshift.bootstrap_cluster
-      quarkus_on_openshift_bootstrap_cluster_ocp_myvar: myvalue
+      quarkus_on_openshift_bootstrap_cluster_myvar: myvalue
 ```
 
 #### Variables
 
 | Variable | Default | Description |
 |---|---|---|
-| `quarkus_on_openshift_bootstrap_cluster_ocp_myvar` | `""` | Example variable |
+| `quarkus_on_openshift_bootstrap_cluster_myvar` | `""` | Example variable |
 
 ### bootstrap_tenant
 
