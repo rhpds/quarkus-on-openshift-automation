@@ -45,7 +45,7 @@
 
 - name: Create OpenShift Objects for Kafka (amq streams)
   when: r_amq_sub.resources | list | length == 0
-  include_tasks: install-amqstreams.yaml
+  ansible.builtin.include_tasks: install-amqstreams.yaml
 
   # Install  Opentelemetry for all workspaces
 - name: Look for opentelemetry subscription
@@ -58,7 +58,7 @@
 
 - name: Create OpenShift Objects for opentelemetry
   when: r_opentelemetry_sub.resources | list | length == 0
-  include_tasks: install-opentelemetry.yaml
+  ansible.builtin.include_tasks: install-opentelemetry.yaml
 
 # TODO: Replace this Jaeger operator with the newer Tempo operator:
 - name: Look for jaeger subscription
@@ -71,4 +71,4 @@
 
 - name: Create OpenShift Objects for Jaeger
   when: r_jaeger_sub.resources | list | length == 0
-  include_tasks: install-jaeger.yaml
+  ansible.builtin.include_tasks: install-jaeger.yaml

@@ -21,14 +21,6 @@
         hello: "world"
   loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
 
-# TODO: confirm that this is still needed && isn't handled elsewhere
-- name: Create LimitRange for project
-  kubernetes.core.k8s:
-    merge_type:
-    - merge
-    definition: "{{ lookup('template', 'limit-range.yml' ) }}"
-  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
-
 # TODO: confirm that this is still needed
 - name: Create RBAC for monitoring-edit
   kubernetes.core.k8s:
