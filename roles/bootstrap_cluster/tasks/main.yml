@@ -60,15 +60,14 @@
   when: r_opentelemetry_sub.resources | list | length == 0
   ansible.builtin.include_tasks: install-opentelemetry.yaml
 
-# TODO: Replace this Jaeger operator with the newer Tempo operator:
-- name: Look for jaeger subscription
+- name: Look for tempo subscription
   k8s_info:
     api_version: operators.coreos.com/v1alpha1
     kind: Subscription
-    name: jaeger-product
-    namespace: openshift-operators
-  register: r_jaeger_sub
+    name: tempo-product
+    namespace: openshift-tempo-operator
+  register: r_tempo_sub
 
-- name: Create OpenShift Objects for Jaeger
-  when: r_jaeger_sub.resources | list | length == 0
-  ansible.builtin.include_tasks: install-jaeger.yaml
+- name: Create OpenShift Objects for Tempo
+  when: r_tempo_sub.resources | list | length == 0
+  ansible.builtin.include_tasks: install-tempo.yaml
