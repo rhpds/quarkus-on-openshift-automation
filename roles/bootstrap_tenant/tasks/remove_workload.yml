@@ -8,3 +8,125 @@
     name: "example-tenant-config"
     namespace: "{{ item }}"
   loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove DevWorkspace instance
+  kubernetes.core.k8s:
+    api_version: workspace.devfile.io/v1alpha2
+    kind: DevWorkspace
+    state: absent
+    name: quarkus-workshop
+    namespace: "{{ quarkus_on_openshift_bootstrap_tenant_username }}-devspaces"
+
+- name: Remove devspaces namespace
+  kubernetes.core.k8s:
+    state: absent
+    api_version: project.openshift.io/v1
+    kind: Project
+    name: "{{ quarkus_on_openshift_bootstrap_tenant_username }}-devspaces"
+
+- name: Remove people deployment
+  kubernetes.core.k8s:
+    state: absent
+    api_version: apps/v1
+    kind: Deployment
+    name: people
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove dc postgres-database
+  kubernetes.core.k8s:
+    state: absent
+    kind: DeploymentConfig
+    api_version: apps.openshift.io/v1
+    name: postgres-database
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove grafana
+  kubernetes.core.k8s:
+    state: absent
+    kind: Deployment
+    api_version: apps/v1
+    name: grafana
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove prometheus
+  kubernetes.core.k8s:
+    state: absent
+    kind: Deployment
+    api_version: apps/v1
+    name: prometheus
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove kafka
+  kubernetes.core.k8s:
+    api_version: kafka.strimzi.io/v1beta2
+    kind: Kafka
+    state: absent
+    name: names-cluster
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove kafka topic
+  kubernetes.core.k8s:
+    state: absent
+    api_version: kafka.strimzi.io/v1beta2
+    kind: KafkaTopic
+    name: names-topic
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove kafka nodepool
+  kubernetes.core.k8s:
+    state: absent
+    api_version: kafka.strimzi.io/v1beta2
+    kind: KafkaNodePool
+    name: names-pool
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove keycloak operatorgroup
+  kubernetes.core.k8s:
+    state: absent
+    api_version: operators.coreos.com/v1
+    kind: OperatorGroup
+    name: rhbk-operator-group
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove keycloak sub
+  kubernetes.core.k8s:
+    state: absent
+    api_version: operators.coreos.com/v1alpha1
+    kind: Subscription
+    name: "rhbk-sub-{{ quarkus_on_openshift_bootstrap_tenant_username }}"
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove otel
+  kubernetes.core.k8s:
+    state: absent
+    api_version: opentelemetry.io/v1beta1
+    kind: OpenTelemetryCollector
+    name: otel
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove TempoMonolithic
+  kubernetes.core.k8s:
+    state: absent
+    api_version: tempo.grafana.com/v1alpha1
+    kind: TempoMonolithic
+    name: tempo
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove remaining tenant namespaces
+  kubernetes.core.k8s:
+    state: absent
+    api_version: project.openshift.io/v1
+    kind: Project
+    name: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
