@@ -87,6 +87,33 @@
     namespace: "{{ item }}"
   loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
 
+- name: Remove Keycloak Realm
+  kubernetes.core.k8s:
+    kind: KeycloakRealmImport
+    api_version: k8s.keycloak.org/v2alpha1
+    name: keycloak-quarkus-realm-import
+    state: absent
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove Keycloak CR
+  kubernetes.core.k8s:
+    api_version: k8s.keycloak.org/v2alpha1
+    kind: Keycloak
+    name: keycloak
+    state: absent
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
+- name: Remove dc keycloak-postgresql
+  kubernetes.core.k8s:
+    state: absent
+    kind: DeploymentConfig
+    api_version: apps.openshift.io/v1
+    name: keycloak-postgresql
+    namespace: "{{ item }}"
+  loop: "{{ quarkus_on_openshift_bootstrap_tenant_namespaces }}"
+
 - name: Remove keycloak operatorgroup
   kubernetes.core.k8s:
     state: absent
